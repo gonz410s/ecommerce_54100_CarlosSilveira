@@ -4,6 +4,8 @@ import { Card, Button } from 'react-bootstrap';
 import "../Card/card.css";
 import { useCart } from "../CartContext/CartContext";
 import ItemCount from "../ItemCount/ItemCount";
+import { Link } from 'react-router-dom';
+import ItemDetailContainer from '../ItemDetailContainer/ItemDetailContainer';
 
 function ProductItemCard({ product }) {
   const { addToCart, removeFromCart } = useCart();
@@ -31,11 +33,15 @@ function ProductItemCard({ product }) {
         <Card.Text>{product.description}</Card.Text>
         <ItemCount initial={quantity} max={product.stock} onAdd={handleAddItem} onRemove={handleRemoveItem} />
         <Button variant="warning" disabled>{`Stock: ${product.stock - quantity}`}</Button>
+        <br></br>
+        <Link to={`/detail/${product.id}`} className="btn btn-primary">Detalles</Link>
       </Card.Body>
       <Card.Footer>
         <small className="text-muted">Precio: ${product.price}</small>
       </Card.Footer>
+      
     </Card>
+    
   );
 }
 

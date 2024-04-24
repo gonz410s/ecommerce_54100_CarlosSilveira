@@ -7,7 +7,6 @@ function CartPage() {
   const { cartItems, removeFromCart, decreaseCartItemQuantity } = useCart();
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Calcula la cantidad total de cada producto y la suma total de todos los productos
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     cartItems.forEach((item) => {
@@ -41,7 +40,7 @@ function CartPage() {
               <Card.Title>{item.name}</Card.Title>
               <Card.Text>Cantidad: {item.quantity}</Card.Text>
               <Button variant="secondary" onClick={() => handleRemoveOneItem(item.id)}>
-                -1
+                Devuelve 1 item
               </Button>
               <Button variant="danger" onClick={() => handleRemoveAllItems(item.id)}>
                 Quitar Todo

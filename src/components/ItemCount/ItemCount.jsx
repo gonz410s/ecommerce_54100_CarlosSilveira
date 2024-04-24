@@ -20,9 +20,7 @@ function ItemCount({ initial, max, onAdd, onRemove }) {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleRemove}>-</Button>
-      <span>{count}</span>
-      <Button variant="primary" onClick={handleAdd}>+</Button>
+      <Button variant="primary" onClick={handleAdd}>Agregar al carrito</Button>
     </div>
   );
 }

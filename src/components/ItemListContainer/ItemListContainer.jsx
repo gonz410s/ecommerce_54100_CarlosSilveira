@@ -1,32 +1,37 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import ProductItemCard from '../Card/ProductCard';
-import { CartContext } from "../CartContext/CartContext";
+import { useParams } from "react-router-dom";
+import GetProducts from '../Data/products';
 
-function ItemListContainer({ products, filterProducts }) {
-  const { addToCart } = useContext(CartContext);
-  const [loading, setLoading] = useState(true);
-  const noProductsMessage = "No hay productos disponibles";
+function ItemListContainer({ saludo }) {
+  const [products, setProducts] = useState([]);
+  const { idCategory } = useParams();
 
-  const handleFilter = (category) => {
-    filterProducts(category);
+useEffect(() => {
+  console.log("idCategory:", idCategory);
+  GetProducts
+    .then((respuesta) => {
+      if (idCategory) {
+        const newProducts = respuesta.filter((producto) => {
+          console.log("Producto:", producto);
+          console.log("Categorías:", producto.category);
+          console.log("Coincide:", producto.category.includes(idCategory));
+          return producto.category.includes(idCategory);
+        });
+        console.log("Productos filtrados:", newProducts);
+        setProducts(newProducts);
+      } else {
+        setProducts(respuesta);
+      }
+    })
+    .catch((error) => {
+      console.error('Error Obteniendo Productos', error);
+    });
+}, [idCategory]);
+
+  const addToCart = (productId) => {
   };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return <div><h1>CARGANDO....</h1></div>;
-  }
-
-  if (!products || products.length === 0) {
-    return <div>{noProductsMessage}</div>;
-  }
 
   return (
     <Container>
