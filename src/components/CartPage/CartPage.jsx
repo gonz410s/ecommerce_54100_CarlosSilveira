@@ -1,0 +1,66 @@
+// CartPage.jsx
+import React, { useState, useEffect } from 'react';
+import { Card, Button } from 'react-bootstrap';
+import { useCart } from '../CartContext/CartContext';
+
+function CartPage() {
+  const { cartItems, removeFromCart, decreaseCartItemQuantity } = useCart();
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Calcula la cantidad total de cada producto y la suma total de todos los productos
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    cartItems.forEach((item) => {
+      totalPrice += item.price * item.quantity;
+    });
+    setTotalPrice(totalPrice);
+  };
+
+  const handleRemoveOneItem = (productId) => {
+    decreaseCartItemQuantity(productId);
+    calculateTotalPrice();
+  };
+
+  const handleRemoveAllItems = (productId) => {
+    removeFromCart(productId);
+    calculateTotalPrice();
+  };
+
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [cartItems]);
+
+  return (
+    <div>
+      <h2>Carrito de Compras</h2>
+      {cartItems.length > 0 ? (
+        cartItems.map((item) => (
+          <Card key={item.id} className="card">
+            <Card.Img variant="top" style={{ width: '17rem' }} src={item.imageURL} />
+            <Card.Body>
+              <Card.Title>{item.name}</Card.Title>
+              <Card.Text>Cantidad: {item.quantity}</Card.Text>
+              <Button variant="secondary" onClick={() => handleRemoveOneItem(item.id)}>
+                -1
+              </Button>
+              <Button variant="danger" onClick={() => handleRemoveAllItems(item.id)}>
+                Quitar Todo
+              </Button>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Precio: ${item.price * item.quantity}</small>
+            </Card.Footer>
+          </Card>
+        ))
+      ) : (
+        <div>No hay elementos en el carrito</div>
+      )}
+      <div>
+        <p>Total a pagar: ${totalPrice}</p>
+        <Button variant="primary">Comprar</Button>
+      </div>
+    </div>
+  );
+}
+
+export default CartPage;

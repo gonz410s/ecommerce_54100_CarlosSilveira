@@ -1,0 +1,36 @@
+.footer {
+  font-size: 1rem;
+  font-family: "Rubik", sans-serif;
+  color: black !important;
+  height: 30vh;
+  margin-top: 30px;
+  position: fixed bottom !important;
+  bottom: 0;
+  text-align: center !important;
+}
+
+@media screen and (max-width: 600px) {
+  .iconosFooter {
+    display: flex;
+    justify-content: space-evenly;
+  }
+}
+.instagram i:hover {
+  background: linear-gradient(115deg, #f9ce34, #ee2a7b, #6228d7);
+  border-radius: 5px;
+}
+
+.whatsapp i:hover {
+  background: green;
+  border-radius: 5px;
+}
+
+.linkedin i:hover {
+  background: blue;
+  border-radius: 5px;
+}
+
+.icono {
+    width: 50px;
+    height: 50px;
+}

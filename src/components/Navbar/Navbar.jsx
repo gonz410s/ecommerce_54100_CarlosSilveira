@@ -1,31 +1,41 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import React, { useState } from 'react';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import './Navbar.css';
-import { FiShoppingCart } from "react-icons/fi";
-import Badge from 'react-bootstrap/Badge';
+import CartWidget from '../CartWidget/CartWidget';
+import GetProducts from '../Data/products';
+import ItemListContainer from '../ItemListContainer/ItemListContainer';
+import { Link } from 'react-router-dom'; // Importar Link desde react-router-dom
 
 function NavbarGonzo() {
-  return (
-    <nav>
-      <Navbar className="menu" sticky="top" bg="dark" data-bs-theme="dark">
-        <Container>
-          <Navbar.Brand href="#home">Inicio</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="#tienda">Tienda</Nav.Link>
-            <Nav.Link href="#nosotros">Nosotros</Nav.Link>
-            <Nav.Link href="#contacto">Contacto</Nav.Link>
-          </Nav>
-          
-        </Container>
-        <Nav.Link><FiShoppingCart className="carrito" size="25px" Href="#carrito" />
-            Profile <Badge bg="secondary">9</Badge>
-            <span className="visually-hidden">items en tu carrito</span></Nav.Link>
-        
-      </Navbar>
+  let [allProducts] = useState(GetProducts);
+  let [filteredProducts, setFilteredProducts] = useState(allProducts);
 
-    
-    </nav>
+  let filterProducts = (category) => {
+    console.log("Categoría seleccionada:", category);
+    if (category === "all") {
+      setFilteredProducts(allProducts);
+    } else {
+      let filtered = allProducts.filter(product => product.category.includes(category));
+      console.log("Productos filtrados:", filtered);
+      setFilteredProducts(filtered);
+    }
+  };
+
+  return (
+    <div>
+      <Navbar className="menu" sticky="top" bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand as={Link} to="/">Inicio</Navbar.Brand> 
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/tienda" onClick={() => filterProducts("all")}>Tienda</Nav.Link> 
+            <Nav.Link as={Link} to="/h_manuales" onClick={() => filterProducts("manual")}>Herramientas Manuales</Nav.Link> 
+            <Nav.Link as={Link} to="/h_electricas" onClick={() => filterProducts("electrical")}>Herramientas Eléctricas</Nav.Link> 
+            <CartWidget as={Link} to="/cart"/>
+          </Nav>
+        </Container>
+      </Navbar>
+      <ItemListContainer products={filteredProducts} filterProducts={filterProducts} />
+    </div>
   );
 }
 

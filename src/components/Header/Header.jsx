@@ -1,13 +1,13 @@
-import React from 'react';
-import logo from '../../assets/images/logo.png';
-import './Banner.css';
 
-function Banner() {
+import logo from '../../assets/images/logo.png';
+import './Header.css';
+
+function Header() {
   return (
-    <div className="banner">
+    <div className="header">
       <img src={logo} alt="Logo" className="logo" />
     </div>
   );
 }
 
-export default Banner;
+export default Header;
