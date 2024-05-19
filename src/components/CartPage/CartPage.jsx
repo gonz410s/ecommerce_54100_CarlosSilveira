@@ -1,11 +1,12 @@
-// CartPage.jsx
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, Button } from 'react-bootstrap';
 import { useCart } from '../CartContext/CartContext';
 
 function CartPage() {
   const { cartItems, removeFromCart, decreaseCartItemQuantity } = useCart();
   const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate();
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
@@ -23,6 +24,10 @@ function CartPage() {
   const handleRemoveAllItems = (productId) => {
     removeFromCart(productId);
     calculateTotalPrice();
+  };
+
+  const handleCheckout = () => {
+    navigate('/brief');
   };
 
   useEffect(() => {
@@ -56,7 +61,7 @@ function CartPage() {
       )}
       <div>
         <p>Total a pagar: ${totalPrice}</p>
-        <Button variant="primary">Comprar</Button>
+        <Button variant="primary" onClick={handleCheckout}>Comprar</Button>
       </div>
     </div>
   );

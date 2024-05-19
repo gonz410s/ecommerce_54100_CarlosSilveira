@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { useCart } from '../CartContext/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 function CartPageItem({ item }) {
   const { removeFromCart, decreaseCartItemQuantity } = useCart();
