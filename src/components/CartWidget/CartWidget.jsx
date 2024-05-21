@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Badge } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
-import { Badge } from 'react-bootstrap';
 import { CartContext } from '../CartContext/CartContext';
 
 function CartWidget() {
@@ -14,11 +13,7 @@ function CartWidget() {
   useEffect(() => {
     setIsVisible(cartItems.length > 0);
 
-    // Calcula la cantidad total de elementos en el carrito
-    let total = 0;
-    cartItems.forEach((item) => {
-      total += item.quantity;
-    });
+    const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
     setTotalQuantity(total);
   }, [cartItems]);
 

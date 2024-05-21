@@ -1,8 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+// main.jsx
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyADd4kbzNbTH2xKjcZOX6_jKGjY9OJkqxA",
@@ -14,10 +17,11 @@ const firebaseConfig = {
   measurementId: "G-18KSYJRD68"
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

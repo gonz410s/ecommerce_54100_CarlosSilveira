@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import GetProducts from '../Data/products';
+import { db } from '../../main';
+import { doc, getDoc } from 'firebase/firestore';
 
 function ItemDetailContainer() {
   const { idProduct } = useParams();
@@ -11,14 +12,16 @@ function ItemDetailContainer() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const products = await GetProducts;
-        const foundProduct = products.find(product => product.id === parseInt(idProduct));
-        setTimeout(() => {
-          setProduct(foundProduct);
-          setLoading(false);
-        }, 1500);
+        const productRef = doc(db, 'itemList', idProduct);
+        const docSnap = await getDoc(productRef);
+        if (docSnap.exists()) {
+          setProduct({ id: docSnap.id, ...docSnap.data() });
+        } else {
+          console.log('No such document!');
+        }
+        setLoading(false);
       } catch (error) {
-        console.error('Error obteniendo los productos:', error);
+        console.error('Error fetching product:', error);
       }
     };
 
@@ -35,7 +38,7 @@ function ItemDetailContainer() {
 
   return (
     <Card className="card">
-      <Card.Img variant="top" style={{ width: "17rem" }} src={product.imageURL} />
+      <Card.Img variant="top" style={{ width: "17rem" }} src={product.imgURL} />
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
         <Card.Text>{product.description}</Card.Text>

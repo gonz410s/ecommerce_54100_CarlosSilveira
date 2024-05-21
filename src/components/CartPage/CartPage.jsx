@@ -1,68 +1,126 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
+import { Button, Card, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button } from 'react-bootstrap';
-import { useCart } from '../CartContext/CartContext';
+import { CartContext } from '../CartContext/CartContext';
+import CartPageItem from './CartPageItem';
+import './CartPage.css';
 
 function CartPage() {
-  const { cartItems, removeFromCart, decreaseCartItemQuantity } = useCart();
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { cartItems, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    address: ''
+  });
 
-  const calculateTotalPrice = () => {
-    let totalPrice = 0;
-    cartItems.forEach((item) => {
-      totalPrice += item.price * item.quantity;
+  const handleConfirm = () => {
+    setShowConfirmation(true);
+  };
+
+  const handleCancel = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
     });
-    setTotalPrice(totalPrice);
-  };
-
-  const handleRemoveOneItem = (productId) => {
-    decreaseCartItemQuantity(productId);
-    calculateTotalPrice();
-  };
-
-  const handleRemoveAllItems = (productId) => {
-    removeFromCart(productId);
-    calculateTotalPrice();
   };
 
   const handleCheckout = () => {
-    navigate('/brief');
+
+    alert('Compra confirmada! Datos enviados: ' + JSON.stringify(formData));
+    clearCart();
+    navigate('/');
   };
 
-  useEffect(() => {
-    calculateTotalPrice();
-  }, [cartItems]);
-
   return (
-    <div>
+    <div className="cart-page">
       <h2>Carrito de Compras</h2>
-      {cartItems.length > 0 ? (
-        cartItems.map((item) => (
-          <Card key={item.id} className="card">
-            <Card.Img variant="top" style={{ width: '17rem' }} src={item.imageURL} />
-            <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Text>Cantidad: {item.quantity}</Card.Text>
-              <Button variant="secondary" onClick={() => handleRemoveOneItem(item.id)}>
-                Devuelve 1 item
-              </Button>
-              <Button variant="danger" onClick={() => handleRemoveAllItems(item.id)}>
-                Quitar Todo
-              </Button>
-            </Card.Body>
-            <Card.Footer>
-              <small className="text-muted">Precio: ${item.price * item.quantity}</small>
-            </Card.Footer>
-          </Card>
-        ))
+      {cartItems.length === 0 ? (
+        <Card>
+          <Card.Body>
+            <Card.Title>No hay productos en el carrito.</Card.Title>
+            <Button variant="primary" onClick={() => navigate('/')}>
+              Ir a la Tienda
+            </Button>
+          </Card.Body>
+        </Card>
       ) : (
-        <div>No hay elementos en el carrito</div>
+        <>
+          <div className="cart-items">
+            {cartItems.map((item) => (
+              <CartPageItem key={item.id} item={item} />
+            ))}
+          </div>
+          <Card className="total-card">
+            <Card.Body>
+              <Card.Title>Total a Pagar:</Card.Title>
+              <Card.Text>
+                ${' '}
+                {cartItems.reduce((total, item) => total + item.price * item.quantity, 0)}
+              </Card.Text>
+              {!showConfirmation && (
+                <Button variant="success" onClick={handleConfirm}>
+                  Confirmar Compra
+                </Button>
+              )}
+              {showConfirmation && (
+                <>
+                  <Form>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Nombre Completo</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Ingrese su nombre completo"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formEmail">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="Ingrese su email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formAddress">
+                      <Form.Label>Dirección de Envío</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        rows={3}
+                        placeholder="Ingrese su dirección de envío"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </Form.Group>
+                  </Form>
+                  <Button variant="primary" onClick={handleCheckout}>
+                    Confirmar Compra
+                  </Button>
+                  <Button variant="secondary" onClick={handleCancel}>
+                    Cancelar
+                  </Button>
+                </>
+              )}
+            </Card.Body>
+          </Card>
+        </>
       )}
-      <div>
-        <p>Total a pagar: ${totalPrice}</p>
-        <Button variant="primary" onClick={handleCheckout}>Comprar</Button>
-      </div>
     </div>
   );
 }

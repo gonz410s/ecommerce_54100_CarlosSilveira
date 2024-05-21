@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { useCart } from '../CartContext/CartContext';
-import { useNavigate } from 'react-router-dom';
 
 function CartPageItem({ item }) {
   const { removeFromCart, decreaseCartItemQuantity } = useCart();
@@ -15,11 +14,12 @@ function CartPageItem({ item }) {
   };
 
   return (
-    <Card className="card">
-      <Card.Img variant="top" style={{ width: '17rem' }} src={item.imageURL} />
+    <Card className="cart-item">
       <Card.Body>
         <Card.Title>{item.name}</Card.Title>
         <Card.Text>Cantidad: {item.quantity}</Card.Text>
+        <Card.Text>Precio unitario: ${item.price}</Card.Text>
+        <Card.Text>Total: ${item.price * item.quantity}</Card.Text>
         <Button variant="secondary" onClick={handleRemoveOneItem}>
           Quitar 1 item
         </Button>
@@ -27,9 +27,6 @@ function CartPageItem({ item }) {
           Quitar Todo
         </Button>
       </Card.Body>
-      <Card.Footer>
-        <small className="text-muted">Precio: ${item.price * item.quantity}</small>
-      </Card.Footer>
     </Card>
   );
 }
