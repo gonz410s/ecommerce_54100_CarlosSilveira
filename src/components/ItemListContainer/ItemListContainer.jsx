@@ -4,6 +4,7 @@ import ProductItemCard from '../Card/ProductItemCard';
 import { useParams } from 'react-router-dom';
 import { db } from '../../main';
 import { collection, query, where, getDocs } from 'firebase/firestore';
+import "./ItemListContainer.css";
 
 function ItemListContainer() {
   const [products, setProducts] = useState([]);

@@ -3,16 +3,17 @@ import { Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { db } from '../../main';
 import { doc, getDoc } from 'firebase/firestore';
+import "./ItemDetailContainer.css"
 
 function ItemDetailContainer() {
-  const { idProduct } = useParams();
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const productRef = doc(db, 'itemList', idProduct);
+        const productRef = doc(db, 'itemList', id);
         const docSnap = await getDoc(productRef);
         if (docSnap.exists()) {
           setProduct({ id: docSnap.id, ...docSnap.data() });
@@ -26,7 +27,7 @@ function ItemDetailContainer() {
     };
 
     fetchProduct();
-  }, [idProduct]);
+  }, [id]);
 
   if (loading) {
     return <div>Cargando producto...</div>;
@@ -38,7 +39,7 @@ function ItemDetailContainer() {
 
   return (
     <Card className="card">
-      <Card.Img variant="top" style={{ width: "17rem" }} src={product.imgURL} />
+      <Card.Img variant="top" style={{ width: '17rem' }} src={product.imgURL} />
       <Card.Body>
         <Card.Title>{product.name}</Card.Title>
         <Card.Text>{product.description}</Card.Text>

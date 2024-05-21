@@ -13,25 +13,28 @@ Gonzo Store es una tienda en línea que permite a los usuarios navegar por difer
 - **Carrito de Compras**: Añade productos al carrito, ajusta las cantidades y elimina productos.
 - **Confirmación de Compra**: Completa la compra con un formulario de datos personales.
 
+## Estructura del Proyecto
+
+```plaintext
 gonzo-store/
 ├── node_modules/
 ├── src/                  # Código fuente del proyecto
 │   ├── components/       # Componentes React
-│   │   ├── Card/         # Componente relacionados con tarjetas de producto.
-│   │   ├── CartContext/  # Componente de Contexto del carrito.
-│   │   ├── CartPage/     # Página del carrito de compras y de los items del mismo.   
+│   │   ├── Card/         # Componente relacionados con tarjetas de producto
+│   │   ├── CartContext/  # Componente de Contexto del carrito
+│   │   ├── CartPage/     # Página del carrito de compras y de los items del mismo   
 │   │   ├── CartWidget/   # Componente del widget del carrito en la barra de navegación
-│   │   ├── Footer/       # Footer que contiene datos de redes, ubicacion y contacto.
-│   │   ├── Header/       # Header, contiene la imagen de la tienda.
-│   │   ├── ItemCount/    # Contiene el componente ItemCount.jsx que se utiliza en varios componentes.
+│   │   ├── Footer/       # Footer que contiene datos de redes, ubicación y contacto
+│   │   ├── Header/       # Header, contiene la imagen de la tienda
+│   │   ├── ItemCount/    # Contiene el componente ItemCount.jsx que se utiliza en varios componentes
 │   │   ├── ItemDetailContainer/  # Componente para mostrar los detalles de un producto
 │   │   ├── ItemListContainer/    # Componente para listar productos por categoría
-│   │   └── Navbar/   # Componente de la barra de navegación 
+│   │   └── Navbar/       # Componente de la barra de navegación 
 │   ├── main.js           # Configuración principal de Firebase
 │   └── App.js            # Componente principal de la aplicación
 │
-├──.gitignore            # Archivo de gitignore
-├── index.html           # Pagina de index
+├── .gitignore            # Archivo de gitignore
+├── index.html            # Página de index
 ├── package-lock.json
 ├── package.json          # Archivo de configuración de npm
 └── README.md             # Documentación del proyecto
