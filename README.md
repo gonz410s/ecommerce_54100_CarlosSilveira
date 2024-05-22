@@ -13,9 +13,18 @@ Gonzo Store es una tienda en línea que permite a los usuarios navegar por difer
 - **Carrito de Compras**: Añade productos al carrito, ajusta las cantidades y elimina productos.
 - **Confirmación de Compra**: Completa la compra con un formulario de datos personales.
 
+
+## Paquetes a instalar
+
+npm install vite
+npm install react-router-dom
+npm install react
+npm install firebase
+npm install bootstrap
+
+
 ## Estructura del Proyecto
 
-```plaintext
 gonzo-store/
 ├── node_modules/
 ├── src/                  # Código fuente del proyecto
@@ -38,3 +47,5 @@ gonzo-store/
 ├── package-lock.json
 ├── package.json          # Archivo de configuración de npm
 └── README.md             # Documentación del proyecto
+
+

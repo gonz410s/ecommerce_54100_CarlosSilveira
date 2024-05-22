@@ -45,8 +45,8 @@ function CartPage() {
         <Card>
           <Card.Body>
             <Card.Title>No hay productos en el carrito.</Card.Title>
-            <Button variant="primary" onClick={() => navigate('/')}>
-              Ir a la Tienda
+            <Button variant="info" onClick={() => navigate('/category/tools')}>
+              Volver a la Tienda
             </Button>
           </Card.Body>
         </Card>

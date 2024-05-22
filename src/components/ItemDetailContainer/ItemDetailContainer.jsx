@@ -2,32 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { db } from '../../main';
-import { doc, getDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import "./ItemDetailContainer.css"
 
 function ItemDetailContainer() {
-  const { id } = useParams();
+  const { idSingular } = useParams(); // Obtener el idSingular de los parámetros de la URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const productRef = doc(db, 'itemList', id);
-        const docSnap = await getDoc(productRef);
-        if (docSnap.exists()) {
-          setProduct({ id: docSnap.id, ...docSnap.data() });
+        console.log('Fetching product with idSingular:', idSingular); // Log para verificar el idSingular
+        const productsCollection = collection(db, 'itemList');
+        const q = query(productsCollection, where('idSingular', '==', idSingular));
+        const querySnapshot = await getDocs(q);
+  
+        if (!querySnapshot.empty) {
+          const productData = querySnapshot.docs[0].data();
+          console.log('Product found:', productData); // Log para verificar los datos del producto
+          setProduct({ id: querySnapshot.docs[0].id, ...productData });
         } else {
-          console.log('No such document!');
+          console.log('No such document!'); // Log si no se encuentra el documento
         }
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching product:', error);
+      } finally {
+        setLoading(false);
       }
     };
-
+  
     fetchProduct();
-  }, [id]);
+  }, [idSingular]);
 
   if (loading) {
     return <div>Cargando producto...</div>;
