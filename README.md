@@ -18,11 +18,11 @@ Gonzo Store es una tienda en línea que permite a los usuarios navegar por difer
 
 ## Paquetes a instalar
 
-npm install vite
-npm install react-router-dom
-npm install react
-npm install firebase
-npm install bootstrap
+- **npm** install vite
+- **npm** install react-router-dom
+- **npm** install react
+- **npm** install firebase
+- **npm** install bootstrap
 
 
 ## Estructura del Proyecto
