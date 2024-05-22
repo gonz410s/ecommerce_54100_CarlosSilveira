@@ -23,7 +23,7 @@ function ItemDetailContainer() {
           console.log('Product found:', productData); // Log para verificar los datos del producto
           setProduct({ id: querySnapshot.docs[0].id, ...productData });
         } else {
-          console.log('No such document!'); // Log si no se encuentra el documento
+          console.log('No such document!'); // Log si no se encuentra el documento. (Estuve rato revisando la logica pero me ayudaron los logs.)
         }
       } catch (error) {
         console.error('Error fetching product:', error);

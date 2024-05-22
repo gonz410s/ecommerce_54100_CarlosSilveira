@@ -20,13 +20,13 @@ function ItemListContainer() {
         if (idCategory && idCategory !== 'tools') {
           q = query(productsCollection, where('idCategory', 'array-contains', idCategory));
         } else {
-          q = query(productsCollection); // Recuperar todos los productos
+          q = query(productsCollection); // Recupera todos los productos
         }
 
         const querySnapshot = await getDocs(q);
         const productsList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        // Eliminar duplicados basándose en el id del producto
+        // Elimina duplicados basándose en el id del producto
         const uniqueProducts = Array.from(new Set(productsList.map(p => p.id)))
           .map(id => productsList.find(p => p.id === id));
 
