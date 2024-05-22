@@ -1,6 +1,6 @@
+#[[Git](https://github.com/gonz410s/)](https://github.com/gonz410s/ecommerce_54100_CarlosSilveira)
 
-
-# Gonzo Store
+# Gonzo Store by gonz410s
 
 Bienvenido a Gonzo Store, un proyecto desarrollado como parte del curso de React en Coderhouse. Este proyecto fue creado por Gonzalo Silveira.
 
