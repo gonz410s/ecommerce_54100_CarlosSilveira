@@ -45,7 +45,7 @@ function ProductItemCard({ product }) {
         <Button onClick={handleRemoveItem} className="btn-remove-cart">Quitar del carrito</Button>
         <Button variant="warning" disabled className="btn-stock">{`Stock: ${product.stock - quantity}`}</Button>
         <br />
-        <Link to={`/detail/${product.idSingular}`} className="btn btn-primary btn-details">Detalles</Link> // Encontre el error aqui que me estaba volviendo loco. Era solo error de propiedad.
+        <Link to={`/detail/${product.idSingular}`} className="btn btn-primary btn-details">Detalles</Link> 
       </Card.Body>
       <Card.Footer>
         <small className="text-muted product-price">Precio: ${product.price}</small>
