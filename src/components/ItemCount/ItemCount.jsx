@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 function ItemCount({ initial, max, onAdd, onRemove }) {
   const [count, setCount] = useState(initial);
@@ -19,9 +19,11 @@ function ItemCount({ initial, max, onAdd, onRemove }) {
   };
 
   return (
-    <div>
-      <Button variant="primary" onClick={handleAdd}>Agregar al carrito</Button>
-    </div>
+    <ButtonGroup>
+      <Button variant="secondary" onClick={handleRemove}>-</Button>
+      <span style={{ padding: '0 10px' }}>{count}</span>
+      <Button variant="secondary" onClick={handleAdd}>+</Button>
+    </ButtonGroup>
   );
 }
 

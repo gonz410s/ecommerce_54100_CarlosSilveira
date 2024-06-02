@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Button, Badge } from 'react-bootstrap';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
-import { CartContext } from '../CartContext/CartContext';
+import { useCart } from '../CartContext/CartContext';
 
 function CartWidget() {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems } = useCart();
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
   const [totalQuantity, setTotalQuantity] = useState(0);

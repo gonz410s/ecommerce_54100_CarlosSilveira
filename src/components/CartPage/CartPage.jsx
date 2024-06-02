@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { CartContext } from '../CartContext/CartContext';
+import { db } from '../../main';
+import { useCart } from '../CartContext/CartContext';
 import CartPageItem from './CartPageItem';
+import { collection, addDoc } from 'firebase/firestore';
 import './CartPage.css';
 
 function CartPage() {
-  const { cartItems, clearCart } = useContext(CartContext);
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [formData, setFormData] = useState({
@@ -31,11 +33,24 @@ function CartPage() {
     });
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
+    const purchaseData = {
+      name: formData.name,
+      email: formData.email,
+      address: formData.address,
+      items: cartItems,
+      total: cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+      timestamp: new Date()
+    };
 
-    alert('Compra confirmada! Datos enviados: ' + JSON.stringify(formData));
-    clearCart();
-    navigate('/');
+    try {
+      const docRef = await addDoc(collection(db, 'purchases'), purchaseData);
+      console.log('Compra confirmada con el ID:', docRef.id);
+      clearCart();
+      navigate('/');
+    } catch (error) {
+      console.error('Error al confirmar la compra:', error);
+    }
   };
 
   return (
