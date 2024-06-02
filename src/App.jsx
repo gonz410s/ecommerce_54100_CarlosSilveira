@@ -9,6 +9,8 @@ import ItemListContainer from './components/ItemListContainer/ItemListContainer'
 import CartPage from './components/CartPage/CartPage';
 import Tienda from "./components/Tienda/Tienda";
 import { CartProvider } from './components/CartContext/CartContext';
+import InvoiceSearchPage from './components/InvoiceComponents/InvoiceSearchPage';
+import InvoiceSearchResult from './components/InvoiceComponents/InvoiceSearchResult';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
           <Route exact path="/category/:idCategory" element={<ItemListContainer/>} />
           <Route exact path="/detail/:idSingular" element={<ItemDetailContainer />} />
           <Route exact path="/cart" element={<CartPage />} />
+          <Route exact path="/search-invoices" element={<InvoiceSearchPage />} />
+          <Route exact path="/search-result/:searchType/:searchValue" element={<InvoiceSearchResult />} />
         </Routes>
         <Footer />
       </Router>

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Button, Card, Form, Spinner } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../main';
 import { useCart } from '../CartContext/CartContext';
 import CartPageItem from './CartPageItem';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, setDoc, doc } from 'firebase/firestore';
 import './CartPage.css';
+import generateOrderId from '../GenerateOrderId/GenerateOrderId';
 
 function CartPage() {
   const { cartItems, clearCart } = useCart();
@@ -16,6 +17,8 @@ function CartPage() {
     email: '',
     address: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleConfirm = () => {
     setShowConfirmation(true);
@@ -34,22 +37,29 @@ function CartPage() {
   };
 
   const handleCheckout = async () => {
+    const orderId = generateOrderId();
     const purchaseData = {
-      name: formData.name,
-      email: formData.email,
-      address: formData.address,
+      name: formData.name.toLowerCase(),
+      email: formData.email.toLowerCase(),
+      address: formData.address.toLowerCase(),
       items: cartItems,
       total: cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
       timestamp: new Date()
     };
 
+    setLoading(true);
+    setError(null);
+
     try {
-      const docRef = await addDoc(collection(db, 'purchases'), purchaseData);
-      console.log('Compra confirmada con el ID:', docRef.id);
+      await setDoc(doc(db, 'purchases', orderId), purchaseData);
+      console.log('Compra confirmada con el ID:', orderId);
       clearCart();
-      navigate('/');
+      navigate(`/search-result/orderId/${orderId}`); // Redirige a la página de resultados de búsqueda con el ID de la factura
     } catch (error) {
       console.error('Error al confirmar la compra:', error);
+      setError('Error al confirmar la compra.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,13 +135,18 @@ function CartPage() {
                     </Form.Group>
                   </Form>
                   <Button variant="primary" onClick={handleCheckout}>
-                    Confirmar Compra
+                    {loading ? (
+                      <Spinner animation="border" size="sm" />
+                    ) : (
+                      'Confirmar Compra'
+                    )}
                   </Button>
                   <Button variant="secondary" onClick={handleCancel}>
                     Cancelar
                   </Button>
                 </>
               )}
+              {error && <div className="text-danger mt-2">{error}</div>}
             </Card.Body>
           </Card>
         </>

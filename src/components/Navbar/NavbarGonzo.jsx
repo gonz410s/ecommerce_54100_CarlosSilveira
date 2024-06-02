@@ -15,6 +15,7 @@ function NavbarGonzo() {
             <Nav.Link as={NavLink} to="/category/tools">Tienda</Nav.Link>
             <Nav.Link as={NavLink} to="/category/manual">Herramientas Manuales</Nav.Link>
             <Nav.Link as={NavLink} to="/category/electrical">Herramientas Eléctricas</Nav.Link>
+            <Nav.Link as={NavLink} to="/search-invoices">Buscador de Facturas</Nav.Link>
             <CartWidget />
           </Nav>
         </Container>
