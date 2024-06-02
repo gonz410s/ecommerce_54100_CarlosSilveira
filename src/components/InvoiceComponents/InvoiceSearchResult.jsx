@@ -4,8 +4,11 @@ import { useParams } from 'react-router-dom';
 import { db } from '../../main';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
-function InvoiceSearchResult() {
-  const { searchType, searchValue } = useParams();
+function InvoiceSearchResult({ searchType: propSearchType, searchValue: propSearchValue }) {
+  const { searchType: paramSearchType, searchValue: paramSearchValue } = useParams();
+  const searchType = propSearchType || paramSearchType;
+  const searchValue = propSearchValue || paramSearchValue;
+
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

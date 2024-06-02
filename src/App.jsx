@@ -12,7 +12,6 @@ import { CartProvider } from './components/CartContext/CartContext';
 import InvoiceSearchPage from './components/InvoiceComponents/InvoiceSearchPage';
 import InvoiceSearchResult from './components/InvoiceComponents/InvoiceSearchResult';
 
-
 function App() {
   return (
     <CartProvider>

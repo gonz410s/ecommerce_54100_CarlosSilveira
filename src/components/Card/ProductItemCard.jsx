@@ -33,15 +33,15 @@ function ProductItemCard({ product }) {
         <Card.Title>{product.name}</Card.Title>
         <Card.Text>{product.description}</Card.Text>
         <ButtonGroup>
-          <Button variant="secondary" onClick={handleRemove}>Quitar</Button>
+          <Button variant="danger" onClick={handleRemove}>Quitar</Button>
           <span style={{ padding: '25px 20px' }}>{stock}</span>
-          <Button variant="secondary" onClick={handleAdd}>Comprar</Button>
+          <Button variant="success" onClick={handleAdd}>Comprar</Button>
         </ButtonGroup>
-        <Link to={`/detail/${product.idSingular}`}>
-          <Button variant="primary" className="ms-2">Detalles</Button>
-        </Link>
       </Card.Body>
       <Card.Footer>
+      <Link to={`/detail/${product.idSingular}`}>
+          <Button variant="warning" className="ms-2">Detalles</Button>
+        </Link>
         <small className="text-muted">Stock: {stock}</small>
       </Card.Footer>
     </Card>

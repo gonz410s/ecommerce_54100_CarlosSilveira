@@ -20,7 +20,7 @@ function CartPageItem({ item }) {
         <Card.Text>Cantidad: {item.quantity}</Card.Text>
         <Card.Text>Precio: ${item.price}</Card.Text>
         <Button variant="danger" onClick={handleRemoveOneItem}>Quitar uno</Button>
-        <Button variant="danger" onClick={handleRemoveItem}>Quitar todos</Button>
+        <Button variant="dark" onClick={handleRemoveItem}>Quitar todos</Button>
       </Card.Body>
     </Card>
   );

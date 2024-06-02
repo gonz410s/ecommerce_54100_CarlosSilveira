@@ -20,9 +20,9 @@ function ItemCount({ initial, max, onAdd, onRemove }) {
 
   return (
     <ButtonGroup>
-      <Button variant="secondary" onClick={handleRemove}>-</Button>
+      <Button variant="danger" onClick={handleRemove}>-</Button>
       <span style={{ padding: '0 10px' }}>{count}</span>
-      <Button variant="secondary" onClick={handleAdd}>+</Button>
+      <Button variant="success" onClick={handleAdd}>+</Button>
     </ButtonGroup>
   );
 }

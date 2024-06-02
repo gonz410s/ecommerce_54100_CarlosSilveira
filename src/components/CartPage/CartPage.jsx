@@ -54,7 +54,7 @@ function CartPage() {
       await setDoc(doc(db, 'purchases', orderId), purchaseData);
       console.log('Compra confirmada con el ID:', orderId);
       clearCart();
-      navigate(`/search-result/orderId/${orderId}`); // Redirige a la página de resultados de búsqueda con el ID de la factura
+      navigate(`/search-result/orderId/${orderId}`);
     } catch (error) {
       console.error('Error al confirmar la compra:', error);
       setError('Error al confirmar la compra.');
