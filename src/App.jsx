@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from './components/Header/Header';
 import NavbarGonzo from './components/Navbar/NavbarGonzo';
@@ -19,6 +19,7 @@ function App() {
         <Header />
         <NavbarGonzo/>
         <Routes>
+          <Route exact path="/" element={<Navigate to="/Tienda" />} />
           <Route exact path="/Tienda" element={<Tienda/>} />
           <Route exact path="/category/tools" element={<ItemListContainer/>} />
           <Route exact path="/category/:idCategory" element={<ItemListContainer/>} />
